@@ -8,7 +8,7 @@ Segue os principais serviços criados
 ##### Criar POI
 - Para cadastrar um ponto de interesse execute:<br>
 <code>POST http://localhost:8080/poi</code>
-Body:
+
 <code>
 {
 	"x":1,
