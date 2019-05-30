@@ -15,4 +15,6 @@ public interface PointInterestService {
   void save( PointInterest poi );
 
   List findAllNear(Long x, Long y, Long dist);
+
+  List findAllNearUsingQuery(Long x, Long y, Long dist);
 }

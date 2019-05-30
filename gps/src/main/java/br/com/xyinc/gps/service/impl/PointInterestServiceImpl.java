@@ -37,16 +37,7 @@ public class PointInterestServiceImpl implements PointInterestService {
 
   @Override
   public List findAllNear(Long x, Long y, Long dist) {
-    try {
-      Assert.notNull( x, "Point x is required" );
-      Assert.isTrue( x >= 0, "The X-point must be >= 0" );
-      Assert.notNull( y, "Point y is required" );
-      Assert.isTrue( y >= 0, "The Y-point must be >= 0" );
-      Assert.notNull( dist, "Distance is required" );
-      Assert.isTrue( dist >= 0, "The distance must be >= 0" );
-    }catch ( Exception e ){
-      throw new PointInterestException( e.getMessage() );
-    }
+    validParameter(x, y, dist);
 
     List<PointInterest> points = pointInterestRepository.findAll();
     return points.stream()
@@ -57,6 +48,19 @@ public class PointInterestServiceImpl implements PointInterestService {
           return result <= dist ;
         })
         .collect( Collectors.toList() );
+  }
+
+  private void validParameter(Long x, Long y, Long dist) {
+    try {
+      Assert.notNull( x, "Point x is required" );
+      Assert.isTrue( x >= 0, "The X-point must be >= 0" );
+      Assert.notNull( y, "Point y is required" );
+      Assert.isTrue( y >= 0, "The Y-point must be >= 0" );
+      Assert.notNull( dist, "Distance is required" );
+      Assert.isTrue( dist >= 0, "The distance must be >= 0" );
+    }catch ( Exception e ){
+      throw new PointInterestException( e.getMessage() );
+    }
   }
 
   @Override
@@ -88,5 +92,11 @@ public class PointInterestServiceImpl implements PointInterestService {
       throw new PointInterestException( "The name point is required" );
     }
 
+  }
+
+  @Override
+  public List findAllNearUsingQuery(Long x, Long y, Long dist) {
+    validParameter(x, y, dist);
+    return pointInterestRepository.findAllNearUsingQuery( dist, x, y );
   }
 }
